@@ -31,6 +31,4 @@ public class Loans {
     @ManyToOne
     @JoinColumn(name = "id_Account")
     private BankAccount bankAccountLoan;
-
-
 }
