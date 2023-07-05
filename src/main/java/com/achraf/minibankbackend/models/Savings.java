@@ -13,7 +13,6 @@ import static jakarta.persistence.GenerationType.AUTO;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 @Table(name="Savings")
 public class Savings {
     @Id
@@ -25,6 +24,6 @@ public class Savings {
     private Date dateToClose;
 
     @ManyToOne
-    @JoinColumn(name = "savings")
+    @JoinColumn(name = "id_account")
     private BankAccount bankAccountSavings;
 }

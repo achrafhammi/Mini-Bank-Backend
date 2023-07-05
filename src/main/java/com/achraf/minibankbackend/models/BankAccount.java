@@ -15,8 +15,7 @@ import static jakarta.persistence.GenerationType.AUTO;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
-@Table(name = "BankAccount")
+@Table(name = "Bank_Account")
 public class BankAccount {
 
     @Id
@@ -32,7 +31,7 @@ public class BankAccount {
     private boolean accountStatus;
 
     @ManyToOne
-    @JoinColumn(name="idUser", nullable = false)
+    @JoinColumn(name="id_user", nullable = false)
     private User ownerUser;
 
     @OneToMany(mappedBy = "bankAccountLoan")
@@ -42,5 +41,13 @@ public class BankAccount {
     @OneToMany(mappedBy = "bankAccountSavings")
     @ToString.Exclude
     private Set<Savings> savings;
+
+    @OneToMany(mappedBy = "bankAccountMade")
+    @ToString.Exclude
+    private Set<Operation> operationsMade;
+
+    @OneToMany(mappedBy = "bankAccountConcerned")
+    @ToString.Exclude
+    private Set<Operation> operationsReceived;
 
 }
