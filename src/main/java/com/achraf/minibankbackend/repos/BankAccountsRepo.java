@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BankAcountsRepo extends JpaRepository<BankAccount, Long> {
+public interface BankAccountsRepo extends JpaRepository<BankAccount, Long> {
+    Boolean existsByPassCode(Integer passCode);
 }

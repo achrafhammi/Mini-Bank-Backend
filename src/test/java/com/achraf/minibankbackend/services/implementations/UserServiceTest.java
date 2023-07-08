@@ -2,7 +2,6 @@ package com.achraf.minibankbackend.services.implementations;
 
 import com.achraf.minibankbackend.models.User;
 import com.achraf.minibankbackend.repos.UserRepo;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,10 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.sql.Date;
-import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -59,7 +56,8 @@ class UserServiceTest {
 
     @Test
     void testRegisterUser() {
-        underTestUserService.registerUser(newUserTest);
+        when(userRepo.save(newUserTest)).thenReturn(newUserTest);
+        User addedUser = underTestUserService.registerUser(newUserTest);
 
         ArgumentCaptor<User> userArgumentCaptor = ArgumentCaptor.forClass(User.class);
 
@@ -67,6 +65,7 @@ class UserServiceTest {
         User capturedUser = userArgumentCaptor.getValue();
 
         assertThat(capturedUser).isEqualTo(newUserTest);
+        assertThat(addedUser).isEqualTo(newUserTest);
     }
 
     @Test
@@ -79,16 +78,18 @@ class UserServiceTest {
 
     @Test
     void testLoginUser() {
-        underTestUserService.loginUser(newUserTest.getUsername(), newUserTest.getPassword());
+        when(userRepo.existsByUsernameAndPassword(newUserTest.getUsername(), newUserTest.getPassword())).thenReturn(true);
+
+        Boolean loginResult = underTestUserService.loginUser(newUserTest.getUsername(), newUserTest.getPassword());
+
         ArgumentCaptor<String> usernameArgumentCaptor = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<String> passwordArgumentCaptor = ArgumentCaptor.forClass(String.class);
-
         verify(userRepo).existsByUsernameAndPassword(usernameArgumentCaptor.capture(), passwordArgumentCaptor.capture());
         String capturedUsername = usernameArgumentCaptor.getValue();
         String capturedPassword = passwordArgumentCaptor.getValue();
-
         assertThat(capturedUsername).isEqualTo(newUserTest.getUsername());
         assertThat(capturedPassword).isEqualTo(newUserTest.getPassword());
+        assertThat(loginResult).isTrue();
     }
 
 

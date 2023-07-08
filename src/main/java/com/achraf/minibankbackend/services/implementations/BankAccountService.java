@@ -2,8 +2,9 @@ package com.achraf.minibankbackend.services.implementations;
 
 import com.achraf.minibankbackend.exceptions.InternalErrorException;
 import com.achraf.minibankbackend.models.BankAccount;
-import com.achraf.minibankbackend.repos.BankAcountsRepo;
-import com.achraf.minibankbackend.services.BankAccountService;
+import com.achraf.minibankbackend.models.User;
+import com.achraf.minibankbackend.repos.BankAccountsRepo;
+import com.achraf.minibankbackend.repos.UserRepo;
 import com.achraf.minibankbackend.utils.ModelUpdater;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -14,21 +15,25 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class BankAcountService implements BankAccountService {
-    private final BankAcountsRepo bankAcountsRepo;
+public class BankAccountService implements com.achraf.minibankbackend.services.BankAccountService {
+    private final BankAccountsRepo bankAccountsRepo;
+    private final UserRepo userRepo;
+
     @Override
     public BankAccount getAccount(Long ID) {
         try {
-            return bankAcountsRepo.getReferenceById(ID);
+            return bankAccountsRepo.getReferenceById(ID);
         }catch(Exception e){
             throw new InternalErrorException("Problem at getting an account: "+ e);
         }
     }
 
     @Override
-    public BankAccount createAccount(Long ID, BankAccount newAccount) {
+    public BankAccount createAccount(Long idUser, BankAccount newAccount) {
         try {
-            return bankAcountsRepo.save(newAccount);
+            User usersAccount = userRepo.getReferenceById(idUser);
+            newAccount.setOwnerUser(usersAccount);
+            return bankAccountsRepo.save(newAccount);
         }catch(Exception e) {
             throw new InternalErrorException("Problem at creating an account: " + e);
         }
@@ -37,7 +42,7 @@ public class BankAcountService implements BankAccountService {
     @Override
     public List<BankAccount> getAllAcounts() {
         try {
-            return bankAcountsRepo.findAll();
+            return bankAccountsRepo.findAll();
         }catch(Exception e) {
             throw new InternalErrorException("Problem at getting all accounts: " + e);
         }
@@ -46,9 +51,9 @@ public class BankAcountService implements BankAccountService {
     @Override
     public BankAccount updateAccount(Long ID, BankAccount updatedAccount) {
         try {
-            BankAccount existingAccount = bankAcountsRepo.getReferenceById(ID);
+            BankAccount existingAccount = bankAccountsRepo.getReferenceById(ID);
             BankAccount toSaveAccount = ModelUpdater.updateModel(existingAccount, updatedAccount);
-            return bankAcountsRepo.save(toSaveAccount);
+            return bankAccountsRepo.save(toSaveAccount);
         }catch(Exception e) {
             throw new InternalErrorException("Problem at updating an account: " + e);
         }
@@ -57,10 +62,16 @@ public class BankAcountService implements BankAccountService {
     @Override
     public void deleteAccount(Long ID) {
         try{
-            bankAcountsRepo.deleteById(ID);
+            bankAccountsRepo.deleteById(ID);
         }catch (Exception e){
             throw new InternalErrorException("Problem at deleting an account: "+e);
         }
+
+    }
+
+    @Override
+    public Boolean loginAccount(Integer passcode) {
+        return bankAccountsRepo.existsByPassCode(passcode);
 
     }
 }
