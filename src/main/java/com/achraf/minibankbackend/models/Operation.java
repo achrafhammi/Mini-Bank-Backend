@@ -1,5 +1,6 @@
 package com.achraf.minibankbackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import static jakarta.persistence.GenerationType.AUTO;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Operation")
 public class Operation {
@@ -19,6 +20,9 @@ public class Operation {
     @GeneratedValue(strategy = AUTO)
     private Long idOperation;
     private String typeOperation;
+
+    @JsonIgnore
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date dateOperation;
     private String motive;
 

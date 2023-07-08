@@ -13,7 +13,7 @@ import static jakarta.persistence.GenerationType.AUTO;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name="Users")
 public class User {

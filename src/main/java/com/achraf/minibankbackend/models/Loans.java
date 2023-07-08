@@ -12,7 +12,7 @@ import static jakarta.persistence.GenerationType.AUTO;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Loans")
 public class Loans {
@@ -26,6 +26,7 @@ public class Loans {
     private Float interest;
     private Float paymentPerMonth;
     @JsonIgnore
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date dateRequest;
 
     @ManyToOne
