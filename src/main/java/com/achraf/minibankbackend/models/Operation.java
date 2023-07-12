@@ -25,6 +25,7 @@ public class Operation {
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date dateOperation;
     private String motive;
+    private Float amountOperation;
 
     @ManyToOne
     @JoinColumn(name = "id_Account_Made")

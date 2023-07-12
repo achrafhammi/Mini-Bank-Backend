@@ -14,20 +14,22 @@ import static jakarta.persistence.GenerationType.AUTO;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="Savings")
-public class Savings {
+@Table(name = "Loans")
+public class Loan {
     @Id
     @GeneratedValue(strategy = AUTO)
-    private Long idSavings;
+    private Long idLoans;
 
-    private Float amountSavings;
-
+    private Float amountRequest;
+    private String reasonRequest;
+    private String statusRequest;
+    private Float interest;
+    private Float paymentPerMonth;
     @JsonIgnore
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date dateCreated;
-    private Date dateToClose;
+    private Date dateRequest;
 
     @ManyToOne
-    @JoinColumn(name = "id_account")
-    private BankAccount bankAccountSavings;
+    @JoinColumn(name = "id_Account")
+    private BankAccount bankAccountLoan;
 }

@@ -2,12 +2,11 @@ package com.achraf.minibankbackend.services;
 
 import com.achraf.minibankbackend.models.Operation;
 
-import java.util.Set;
+import java.util.List;
 
 public interface OperationService {
-    Operation createOperation(Operation newOperation);
-    Set<Operation> getAllOperations(); // for admin
+    Operation createOperation(Long idAccountMade, Long idAccountConcerned, Operation newOperation);
+    List<Operation> getAllOperations(); // for admin
     Operation getOperation(Long ID);
-    Operation updateOperation(Long ID, Operation updatedOperation);
     void deleteOperation(Long ID);
 }

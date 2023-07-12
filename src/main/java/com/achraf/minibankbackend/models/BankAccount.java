@@ -39,11 +39,11 @@ public class BankAccount {
 
     @OneToMany(mappedBy = "bankAccountLoan")
     @ToString.Exclude
-    private Set<Loans> loans;
+    private Set<Loan> loans;
 
     @OneToMany(mappedBy = "bankAccountSavings")
     @ToString.Exclude
-    private Set<Savings> savings;
+    private Set<Saving> savings;
 
     @OneToMany(mappedBy = "bankAccountMade")
     @ToString.Exclude
