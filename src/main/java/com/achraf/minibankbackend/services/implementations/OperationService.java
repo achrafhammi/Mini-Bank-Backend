@@ -1,5 +1,6 @@
 package com.achraf.minibankbackend.services.implementations;
 
+import com.achraf.minibankbackend.exceptions.InsufficientAmountException;
 import com.achraf.minibankbackend.exceptions.InternalErrorException;
 import com.achraf.minibankbackend.models.BankAccount;
 import com.achraf.minibankbackend.models.Operation;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 @Service
 @Transactional
@@ -22,8 +24,13 @@ public class OperationService implements com.achraf.minibankbackend.services.Ope
         try{
             BankAccount bankAccountMade = bankAccountsRepo.getReferenceById(idAccountMade);
             BankAccount bankAccountConcerned = bankAccountsRepo.getReferenceById(idAccountConcerned);
+            if(bankAccountMade.getAmount()<newOperation.getAmountOperation()){
+                throw new InsufficientAmountException();
+            }
             bankAccountMade.setAmount(bankAccountMade.getAmount()-newOperation.getAmountOperation());
+            bankAccountsRepo.save(bankAccountMade);
             bankAccountConcerned.setAmount(bankAccountConcerned.getAmount()+newOperation.getAmountOperation());
+            bankAccountsRepo.save(bankAccountConcerned);
             newOperation.setBankAccountMade(bankAccountMade);
             newOperation.setBankAccountConcerned(bankAccountConcerned);
             return operationRepo.save(newOperation);
