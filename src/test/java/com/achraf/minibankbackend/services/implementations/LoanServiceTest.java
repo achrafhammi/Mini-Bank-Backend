@@ -85,7 +85,7 @@ class LoanServiceTest {
         List<Loan> allLoans = underTestLoanService.getAllLoans();
 
         //Assertions
-        assertThat(allLoans).isEqualTo(allLoans);
+        assertThat(allLoans).isEqualTo(loans);
     }
 
     @Test
@@ -122,11 +122,11 @@ class LoanServiceTest {
         when(loansRepo.getReferenceById(1L)).thenReturn(testLoan);
 
         //test
-        Loan expectedAccount = underTestLoanService.getLoan(1L);
+        Loan expectedLoan = underTestLoanService.getLoan(1L);
 
         //Assertions
         verify(loansRepo).getReferenceById(1L);
-        assertThat(expectedAccount).isEqualTo(testLoan);
+        assertThat(expectedLoan).isEqualTo(testLoan);
     }
 
     @Test
