@@ -35,6 +35,16 @@ public class BankAccountController {
         }
     }
 
+    @PostMapping("/loginaccount")
+    public ResponseEntity<?> loginPasscode(@RequestBody Integer passcode){
+        try {
+            Boolean isLogged = bankAccountService.loginAccount(passcode);
+            return isLogged ? ResponseEntity.status(OK).body("Login effective") : ResponseEntity.status(NOT_FOUND).body("Username/Password wrong");
+        }catch(Exception e){
+            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(e);
+        }
+    }
+
     @PatchMapping("/updateaccount/{id}")
     public ResponseEntity<?> updateAccount(@PathVariable Long id, @RequestBody BankAccount updateAccount){
         try{
