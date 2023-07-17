@@ -63,7 +63,7 @@ public class SavingsController {
     public ResponseEntity<?> deleteSaving(@PathVariable Long id){
         try{
             savingService.deleteSaving(id);
-            return ResponseEntity.status(OK).body("Account Deleted");
+            return ResponseEntity.status(OK).body("Account Deleted Successfully");
         }catch (Exception e){
             return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(e);
         }
