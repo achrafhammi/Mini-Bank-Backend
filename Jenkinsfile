@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone Private Repo') {
+        /*stage('Clone Private Repo') {
             steps {
                 script {
                     // Define the Git URL of your private repository
@@ -15,7 +15,7 @@ pipeline {
                     git branch: 'main', credentialsId: credentials, url: gitUrl
                 }
             }
-        }
+        */
         stage('Build and Test') {
             steps {
                 // Change the working directory to your project directory (where the pom.xml is located)
