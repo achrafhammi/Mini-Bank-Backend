@@ -16,5 +16,5 @@ EXPOSE 8081
 ENV JAVA_OPTS=""
 
 
-# Run the Spring Boot application when the container starts
-CMD ["java", "-jar", "app.jar"]
+# Set the entrypoint to Java, and append the default command arguments
+ENTRYPOINT ["java", "-jar", "app.jar"]
