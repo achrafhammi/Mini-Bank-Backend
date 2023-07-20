@@ -1,0 +1,23 @@
+version: '3.1.1'
+services:
+  spring-app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081" # Replace 8080 with the port your Spring Boot app listens on
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: adminbankuser
+      POSTGRES_PASSWORD: 41823
+      POSTGRES_DB: mini_bank
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
