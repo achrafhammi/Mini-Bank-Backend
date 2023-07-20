@@ -1,6 +1,11 @@
 pipeline {
     agent none
 
+    tools{
+        maven 'MAVEN'
+        jdk 'java.home'
+    }
+
     stages {
         /*stage('Clone Private Repo') {
             steps {
