@@ -34,7 +34,7 @@ pipeline {
         }
         stage('Build Docker Image'){
             steps{
-                bat 'docker-compose up --build'
+                bat 'docker build -t mini-bank-backend:0.0.1'
             }
         }
     }
