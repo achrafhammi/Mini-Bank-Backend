@@ -32,14 +32,15 @@ pipeline {
                 bat 'mvn clean package'
             }
         }
-        stage('Sonar Analysis'){
-            steps{
-                bat 'mvn sonar:sonar -Dsonar.url=http://localhost:9090/ -Dsonar.login=squ_fff4c673258af56d8aa76b1864201693ef3f12d7 -Dsonar.java.binaries=. -Dsonar.projectKey=1'
-            }
-        }
         stage('Build Docker Image'){
             steps{
                 bat 'docker build -t mini-bank-backend:0.0.1 .'
+            }
+        }
+        stage('Push to Docker Repo'){
+            steps{
+                bat 'docker tag mini-bank-backend:0.0.1 mini-bank-app:0.0.1'
+                bat 'docker push mini-bank-app:0.0.1'
             }
         }
     }
