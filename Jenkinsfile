@@ -39,8 +39,9 @@ pipeline {
         }
         stage('Push to Docker Repo'){
             steps{
-                bat 'docker tag mini-bank-backend:0.0.1 mini-bank-app:0.0.1'
-                bat 'docker push mini-bank-app:0.0.1'
+                bat 'docker tag mini-bank-backend:0.0.1 malcomer/mini-bank-app:0.0.1'
+                bat 'docker login'
+                bat 'docker push malcomer/mini-bank-app:0.0.1'
             }
         }
     }
