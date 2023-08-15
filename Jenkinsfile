@@ -7,41 +7,28 @@ pipeline {
     }
 
     stages {
-        /*stage('Clone Private Repo') {
-            steps {
-                script {
-                    // Define the Git URL of your private repository
-                    def gitUrl = 'https://github.com/Malcomer123/Mini-Bank-Backend.git'
 
-                    // Use the Jenkins "credentials" function to access the Git credentials configured in Jenkins
-                    def credentials = credentials('PAT_Jenskin')
-
-                    // Clone the repository using the provided credentials
-                    git branch: 'main', credentialsId: credentials, url: gitUrl
-                }
-            }
-        */
         stage('Build and Test') {
             steps {
                 // Change the working directory to your project directory (where the pom.xml is located)
-                bat 'mvn clean test'
+                sh 'mvn clean test'
             }
         }
         stage('Package .JAR'){
             steps{
-                bat 'mvn clean package'
+                sh 'mvn clean package'
             }
         }
         stage('Build Docker Image'){
             steps{
-                bat 'docker build -t mini-bank-backend:0.0.1 .'
+                sh 'docker build -t mini-bank-backend:0.0.1 .'
             }
         }
         stage('Push to Docker Repo'){
             steps{
-                bat 'docker tag mini-bank-backend:0.0.1 malcomer/mini-bank-app:0.0.1'
-                bat 'docker login -u malcomer -p dockeritoo123'
-                bat 'docker push malcomer/mini-bank-app:0.0.1'
+                sh 'docker tag mini-bank-backend:0.0.1 malcomer/mini-bank-app:0.0.1'
+                sh 'docker login -u malcomer -p dockeritoo123'
+                sh 'docker push malcomer/mini-bank-app:0.0.1'
             }
         }
     }
