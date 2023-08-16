@@ -21,14 +21,14 @@ pipeline {
         }
         stage('Build Docker Image'){
             steps{
-                sh 'docker build -t mini-bank-backend:0.0.1 .'
+                sh 'sudo docker build -t mini-bank-backend:0.0.1 .'
             }
         }
         stage('Push to Docker Repo'){
             steps{
-                sh 'docker tag mini-bank-backend:0.0.1 malcomer/mini-bank-app:0.0.1'
-                sh 'docker login -u malcomer -p dockeritoo123'
-                sh 'docker push malcomer/mini-bank-app:0.0.1'
+                sh 'sudo docker tag mini-bank-backend:0.0.1 malcomer/mini-bank-app:0.0.1'
+                sh 'sudo docker login -u malcomer -p dockeritoo123'
+                sh 'sudo docker push malcomer/mini-bank-app:0.0.1'
             }
         }
     }
