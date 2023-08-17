@@ -38,10 +38,5 @@ pipeline {
                 sh 'sudo docker push malcomer/mini-bank-app:0.0.1'
             }
         }
-        stage('Run App on Server'){
-            steps{
-                sh 'mvn spring-boot:run'
-            }
-        }
     }
 }
