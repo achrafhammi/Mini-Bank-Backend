@@ -14,15 +14,15 @@ pipeline {
                 sh 'mvn clean test'
             }
         }
-        stage('Package .JAR'){
+        stage('Compiling Package .JAR'){
             steps{
-                sh 'mvn clean package'
+                sh 'mvn clean compile package'
             }
         }
         stage('Sonar Scan'){
             steps{
                 withSonarQubeEnv(installationName:'sq1'){
-                    sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+                    sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar -Dsonar.java.binaries=./target/classes'
                 }
             }
         }
