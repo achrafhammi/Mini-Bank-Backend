@@ -8,15 +8,10 @@ pipeline {
 
     stages {
 
-        stage('Build and Test') {
+        stage('Test and Compile') {
             steps {
                 // Change the working directory to your project directory (where the pom.xml is located)
-                sh 'mvn clean test'
-            }
-        }
-        stage('Compile and Package .JAR'){
-            steps{
-                sh 'mvn clean compile package'
+                sh 'mvn clean test compile'
             }
         }
         stage('Sonar Scan'){
@@ -24,6 +19,11 @@ pipeline {
                 withSonarQubeEnv(installationName:'sq1'){
                     sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar -Dsonar.java.binaries=./target'
                 }
+            }
+        }
+        stage('Package .JAR'){
+            steps{
+                sh 'mvn clean package'
             }
         }
         stage('Build Docker Image'){
