@@ -7,7 +7,7 @@ LABEL authors = "Achraf HAMMI"
 WORKDIR /app
 
 # Copy the JAR file of your Spring Boot application into the container
-COPY ./target/Mini-Bank-Backend-0.0.1.jar app.jar
+COPY target/Mini-Bank-Backend-0.0.1.jar app.jar
 
 # Expose the port that your Spring Boot application listens on
 EXPOSE 8081
