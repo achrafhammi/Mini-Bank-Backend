@@ -14,7 +14,7 @@ pipeline {
                 sh 'mvn clean test'
             }
         }
-        stage('Compiling Package .JAR'){
+        stage('Compile and Package .JAR'){
             steps{
                 sh 'mvn clean compile package'
             }
