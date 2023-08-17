@@ -22,7 +22,7 @@ pipeline {
         stage('Sonar Scan'){
             steps{
                 withSonarQubeEnv(installationName:'sq1'){
-                    sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar -Dsonar.java.binaries=/var/lib/jenkins/workspace/CI-CD-Mini-Bank-Pipeline/target/classes'
+                    sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
                 }
             }
         }
