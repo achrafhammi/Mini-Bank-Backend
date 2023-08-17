@@ -21,9 +21,8 @@ pipeline {
         }
         stage('Sonar Scan'){
             steps{
-                sh 'sudo chmod a+x mvnw'
                 withSonarQubeEnv(installationName:'sq1'){
-                    sh 'sudo ./mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+                    sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
                 }
             }
         }
@@ -37,6 +36,11 @@ pipeline {
                 sh 'sudo docker tag mini-bank-backend:0.0.1 malcomer/mini-bank-app:0.0.1'
                 sh 'sudo docker login -u malcomer -p dockeritoo123'
                 sh 'sudo docker push malcomer/mini-bank-app:0.0.1'
+            }
+        }
+        stage('Run App on Server'){
+            steps{
+                sh 'mvn spring-boot:run'
             }
         }
     }
