@@ -19,6 +19,13 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
+        stage('Sonar Scan'){
+            steps{
+                withSonarQubeEnv(installationName:'sq1'){
+                    sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+                }
+            }
+        }
         stage('Build Docker Image'){
             steps{
                 sh 'sudo docker build -t mini-bank-backend:0.0.1 .'
