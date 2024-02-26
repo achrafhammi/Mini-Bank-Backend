@@ -34,7 +34,6 @@ pipeline {
         stage('Push to Docker Repo'){
             steps{
                 sh 'sudo docker tag mini-bank-backend:0.0.1 malcomer/mini-bank-app:0.0.1'
-                sh 'sudo docker login -u malcomer -p dockeritoo123'
                 sh 'sudo docker push malcomer/mini-bank-app:0.0.1'
             }
         }
